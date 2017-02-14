@@ -6,6 +6,8 @@
 package triangle;
 
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -19,14 +21,29 @@ public class Main {
     public static void main(String[] args) {
         
         Scanner sc = new Scanner(System.in);
-        System.out.println("Please enter a comma separated list of the three sides of a triangle");
-        String input = sc.nextLine();
-        String[] sidesStr = input.split(",");
-        int sideA = Integer.parseInt(sidesStr[0]);
-        int sideB = Integer.parseInt(sidesStr[1]);
-        int sideC = Integer.parseInt(sidesStr[2]);
-        Triangle t = new Triangle(sideA, sideB, sideC);
-        System.out.println(t.getTriangleType());
+        while(true){
+            System.out.println("Please enter a comma separated list of the three sides of a triangle, type 'exit' to close:");
+            String input = sc.nextLine();
+            if(input.equals("exit")){
+                break;
+            }
+            String[] sidesStr = input.split(",");
+            if(sidesStr.length != 3){
+                System.out.println("Error: Invalid number of sides, needs to be 3");
+                continue;
+            }
+            int sideA = Integer.parseInt(sidesStr[0]);
+            int sideB = Integer.parseInt(sidesStr[1]);
+            int sideC = Integer.parseInt(sidesStr[2]);
+            Triangle t;
+            try {
+                t = new Triangle(sideA, sideB, sideC);
+            } catch (InvalidTriangleException ex) {
+                System.out.println("Error: " + ex.getMessage());
+                continue;
+            }
+            System.out.println(t.getTriangleType());
+        }
     }
     
 }

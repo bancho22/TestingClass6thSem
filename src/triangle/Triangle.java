@@ -16,7 +16,18 @@ public class Triangle {
     private int sideC;
     private int[] sides;
     
-    public Triangle(int sideA, int sideB, int sideC){
+    public Triangle(int sideA, int sideB, int sideC) throws InvalidTriangleException{
+        
+        if(sideA + sideB < sideC){
+            throw new InvalidTriangleException("Impossible triangle");
+        }
+        if(sideB + sideC < sideA){
+            throw new InvalidTriangleException("Impossible triangle");
+        }
+        if(sideA + sideC < sideB){
+            throw new InvalidTriangleException("Impossible triangle");
+        }
+        
         this.sideA = sideA;
         this.sideB = sideB;
         this.sideC = sideC;
@@ -25,6 +36,12 @@ public class Triangle {
         sides[0] = sideA;
         sides[1] = sideB;
         sides[2] = sideC;
+        
+        for (int side : sides) {
+            if(side <= 0){
+                throw new InvalidTriangleException("The size of the sides cannot be less than or equal to 0");
+            }
+        }
     }
 
     public int getSideA() {
